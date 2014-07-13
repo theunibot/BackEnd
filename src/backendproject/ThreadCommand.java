@@ -22,38 +22,28 @@ public class ThreadCommand extends Thread
     @Override
     public void run()
     {
-        R12Operations o = R12Operations.getInstance();
-        System.out.println("initing");
-        o.init();
-        System.out.println("inited");
-        try
-        {
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException ex)
-        {
-            Logger.getLogger(ThreadCommand.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        o.write("");
-        System.out.println(o.read());
-        o.write("ROBOFORTH");
-        System.out.println("grip");
-        System.out.println(o.read());        
-        o.write("START");
-        System.out.println("ungrip");
-        System.out.println(o.read());
-        o.write("HOME");
-        System.out.println("ungrip");
-        System.out.println(o.read());
-        for (int i = 0; i < 20; i++)
-        {
-            o.write("HOME");
-            System.out.println(o.read());
-            o.write("READY");
-            System.out.println(o.read());
-            o.write("READY2");
-            System.out.println(o.read());
-        }
+        ArmOperations armOps = ArmOperations.getInstance();        
+        armOps.init();                
+//        armOps.write("");
+//        System.out.println(armOps.read());
+//        armOps.write("ROBOFORTH");
+//        System.out.println("grip");
+//        System.out.println(armOps.read());        
+//        armOps.write("START");
+//        System.out.println("ungrip");
+//        System.out.println(armOps.read());
+//        armOps.write("HOME");
+//        System.out.println("ungrip");
+//        System.out.println(armOps.read());
+//        for (int i = 0; i < 20; i++)
+//        {
+//            armOps.write("HOME");
+//            System.out.println(armOps.read());
+//            armOps.write("READY");
+//            System.out.println(armOps.read());
+//            armOps.write("READY2");
+//            System.out.println(armOps.read());
+//        }
 //        System.out.println(o.read());
 //        i.write("START");
 //        System.out.println("start");
@@ -80,10 +70,10 @@ public class ThreadCommand extends Thread
 //        System.out.println(i.read());
 //        System.out.println("written");
 //        init();
-        while (isRunning)
-        {
-            System.out.println("waiting");
-        }
+//        while (isRunning)
+//        {
+//            System.out.println("waiting");
+//        }
 
     }
 

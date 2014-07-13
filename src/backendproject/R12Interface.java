@@ -6,20 +6,17 @@
 package backendproject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.ini4j.Ini;
 
 /**
  *
@@ -29,19 +26,11 @@ public class R12Interface
 {
 
     private final boolean USE_CONNECT_TIMEOUT = true;
-
     private final int INITIAL_CONNECT_TIMEOUT = 5000;//milis
-    private String address = "192.168.1.1";
-    private int port = 1111;
-
-    private final String INI_FILENAME = "R12ArmSetup.ini";
-    private final String INI_FILE_SECTION_KEY = "vars";
-    private final String INI_FILE_PORT_KEY = "portkey";
-    private final String INI_FILE_ADDRESS_KEY = "addresskey";
-
+    
     private Socket socket = null;
-    private InputStream inputStream  = null;
-    private BufferedReader inFromServer = null;   
+    private InputStream inputStream = null;
+    private BufferedReader inFromServer = null;
     private DataOutputStream outToServer = null;
 
     private static R12Interface r12Interface = null;
@@ -55,10 +44,10 @@ public class R12Interface
      *
      * @return boolean - true success, false failure
      */
-    public boolean init()
+    public boolean init(String address, int port)
     {
         boolean success = false;
-        loadInfoFromFile();
+        
         System.out.println("Opening Socket...");
 
         try
@@ -72,8 +61,8 @@ public class R12Interface
             {
                 socket.connect(new InetSocketAddress(InetAddress.getByName(address), port));
             }
-            
-            inputStream = socket.getInputStream();            
+
+            inputStream = socket.getInputStream();
             inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
             outToServer = new DataOutputStream(socket.getOutputStream());
             success = true;
@@ -105,53 +94,7 @@ public class R12Interface
         return r12Interface;
     }
 
-    private void loadInfoFromFile()
-    {
-        try
-        {
-            String workingDir = System.getProperty("user.dir");
-            System.out.println("Working Directory: " + workingDir);
-            String pathToFile = workingDir + File.separator + INI_FILENAME;
-            System.out.println("Parsing file: " + pathToFile);
-            /*=====Parsing File===*/
-            File file = new File(pathToFile);
-            if (file.exists())
-            {
-                System.out.println("INI File found");
-                Ini ini = new Ini(file);
-                String tempPort = ini.get(INI_FILE_SECTION_KEY, INI_FILE_PORT_KEY);
-                String tempAddress = ini.get(INI_FILE_SECTION_KEY, INI_FILE_ADDRESS_KEY);
-                if (tempPort != null && !tempPort.equals(""))
-                {
-                    port = Integer.valueOf(tempPort);
-                }
-                if (tempAddress != null && !tempAddress.equals(""))
-                {
-                    address = tempAddress;
-                }
-                System.out.println("Info from INI file: addr: " + address + " port: " + port);
-            }
-            else
-            {
-                System.out.println("INI File not found. Creating one at " + pathToFile);
-                if (file.createNewFile())//file succesfully created
-                {
-                    FileWriter fw = new FileWriter(file.getAbsoluteFile());
-                    BufferedWriter bw = new BufferedWriter(fw);
-                    bw.write(";ini file for the setup of the R12 TCP Connection.\n"
-                            + "[vars]\n"
-                            + INI_FILE_ADDRESS_KEY + "=" + address + "\n"
-                            + INI_FILE_PORT_KEY + "=" + port);
-                    bw.close();
-                }
-            }
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(R12Interface.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+    
 
     /**
      * Reads the info sent back from the TCP connection. <b>This IS

@@ -16,7 +16,7 @@ public class ArmOperations
 
     private R12Operations r12o = null;
     private static ArmOperations armOprations = null;
-    
+
     //Regular Objects
     private ArrayList<String> initCommands = null;
 
@@ -34,7 +34,7 @@ public class ArmOperations
 
     public ArmOperations()
     {
-        
+
     }
 
     public boolean init()
@@ -45,22 +45,45 @@ public class ArmOperations
         initCommands = FileUtils.readCommandFileOrGenEmpty(INIT_COMMANDS_FILEPATH, INIT_FILE_HEADER);
 
         System.out.println("Read " + initCommands.size() + " command(s) from init commands file.");
-        
+
         if (success)//if the socket was setup and read/write is OK to use
         {
-            for (String command : initCommands)
+            for (String command : initCommands)//runs every command in the file
             {
+                command = command.trim();//removes extra whitespace
                 r12o.write(command);
-                String response = r12o.read();
-                
-                if (!response.equals(RESPONSE_OK))
+                ResponseObject response = getResponse(command);
+
+                if (!response.isSuccessful())
                 {
-                    System.err.println("Command " + command + " got a response of " + response);
-                    success = false;
+                    System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
                 }
-            }            
+            }
         }
         return success;
+    }
+
+    /**
+     * Returns a wrapper object holding data from response.
+     *
+     * @param command command sent, used to filter out of response.
+     * @return ResponseObject wrapper object for command sent
+     */
+    public ResponseObject getResponse(String command)
+    {
+        String responseStr = r12o.readNoEcho(command);
+
+        //clean up string
+        responseStr = responseStr.replace("\n>", "");//filters the ">" and the new line. Saves all other new lines
+        responseStr = responseStr.replace(">", "");//removes any missed ">"
+        responseStr = responseStr.trim();
+        boolean succesful = false;
+        if (responseStr.endsWith(RESPONSE_OK))
+        {
+            succesful = true;
+        }
+        return new ResponseObject(responseStr, succesful);
+
     }
 
     public static ArmOperations getInstance()

@@ -13,8 +13,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.ini4j.Ini;
 
 /**
  *
@@ -26,22 +29,77 @@ public class FileUtils
     public static final String COMMAND_FILE_COMMENT = "//";
 
     /**
-     * Reads the file, but then drops all lines beginning with a comment. If file is not found, one is generated with the content given.
+     * Reads an INI file and parses out each value, placing it in the Map. Generates a file if none is found.
+     * @param pathToFile path the the INI file to read
+     * @param sectionKey section under which the keys are kept
+     * @param keys keys of which the values are desired
+     * @param genContent content to write to a generated content
+     * @return Map of key,value. Never null.
+     */
+    public static Map<String, String> readINIFileOrGenerate(String pathToFile, String sectionKey, String[] keys, String genContent)
+    {
+        Map<String, String> map = readINIFile(pathToFile, sectionKey, keys);
+        if (map == null)
+        {
+            FileUtils.createFile(pathToFile, genContent);
+            map = new HashMap<>();
+        }
+        return map;        
+    }
+
+    /**
+     * Reads an INI file and parses out each value, placing it in the Map
+     *
+     * @param pathToFile path the the INI file to read
+     * @param sectionKey section under which the keys are kept
+     * @param keys keys of which the values are desired
+     * @return Map of key,value. May be null.
+     */
+    public static Map<String, String> readINIFile(String pathToFile, String sectionKey, String[] keys)
+    {
+        Map<String, String> map = null;
+        File file = new File(pathToFile);
+        if (file.exists())
+        {
+            map = new HashMap<>();
+            try
+            {
+                System.out.println("INI File found");
+                Ini ini = new Ini(file);
+                for (String key : keys)
+                {
+                    String value = ini.get(sectionKey, key);
+                    map.put(key, value);
+                }
+
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * Reads the file, but then drops all lines beginning with a comment. If
+     * file is not found, one is generated with the content given.
      *
      * @param filePath Path to the file to read
-     * @return ArrayList<String> of all non-comment lines of the file or an empty ArrayList if ArrayList from read is null or file is generated.
+     * @return ArrayList<String> of all non-comment lines of the file or an
+     * empty ArrayList if ArrayList from read is null or file is generated.
      */
     public static ArrayList<String> readCommandFileOrGenEmpty(String filePath, String contents)
     {
-        
+
         if (FileUtils.fileExists(filePath))
         {
-            
+
             //if command file exists, read all the commands and write them out to the ArrayList
             ArrayList<String> arrayList = readCommandFile(filePath);
             if (arrayList != null)
             {
-               return arrayList;
+                return arrayList;
             }
             else
             {
@@ -50,13 +108,13 @@ public class FileUtils
             }
         }
         else
-        {            
+        {
             System.out.println("Generating New File");
             FileUtils.createFile(filePath, contents);
             return new ArrayList<>();
         }
     }
-    
+
     /**
      * Reads the file, but then drops all lines beginning with a comment.
      *
@@ -210,7 +268,7 @@ public class FileUtils
 
     public static boolean fileExists(String fileString)
     {
-        
+
         return new File(fileString).exists();
     }
 
