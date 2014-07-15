@@ -5,7 +5,6 @@
  */
 package backendproject;
 
-import java.io.File;
 import java.util.Map;
 
 /**
@@ -18,11 +17,11 @@ public class R12Operations
     //Command Objects
     private R12Interface r12i = null;
     private static R12Operations r12Operations = null;
-    
-    //connect vars
+
+    //Connect vars
     private String address = "192.168.1.1";
     private int port = 1111;
-    
+
     //INI vars
     private final String INI_FILENAME = "R12ArmSetup.ini";
     private final String INI_FILE_SECTION_KEY = "vars";
@@ -46,15 +45,34 @@ public class R12Operations
         boolean success = r12i.init(address, port);
         return success;
     }
-
     
+    /**
+     * Returns a wrapper object holding data from response.
+     *
+     * @param command command sent, used to filter out of response.
+     * @return ResponseObject wrapper object for command sent
+     */
+    public ResponseObject getResponse(String command)
+    {
+        String responseStr = readNoEcho(command);
+
+        //clean up string
+        responseStr = responseStr.replace("\n>", "");//filters the ">" and the new line. Saves all other new lines
+        responseStr = responseStr.replace(">", "");//removes any missed ">"
+        responseStr = responseStr.trim();
+        boolean succesful = false;
+        if (responseStr.endsWith(ArmOperations.RESPONSE_OK))
+        {
+            succesful = true;
+        }
+        return new ResponseObject(responseStr, succesful);
+
+    }
+
     private void loadInfoFromFile()
     {
 
-        String workingDir = System.getProperty("user.dir");
-        System.out.println("Working Directory: " + workingDir);
-        String pathToFile = workingDir + File.separator + INI_FILENAME;
-        System.out.println("Parsing file: " + pathToFile);
+        String pathToFile = FileUtils.getFilesFolderString() + INI_FILENAME;
         /*=====Parsing File===*/
 
         Map<String, String> map = FileUtils.readINIFileOrGenerate(
@@ -68,16 +86,16 @@ public class R12Operations
         String portTemp = map.get(INI_FILE_PORT_KEY);
         String addressTemp = map.get(INI_FILE_ADDRESS_KEY);
         if (portTemp != null)
-        {            
+        {
             port = Integer.parseInt(portTemp);
-            
+
         }
         if (addressTemp != null)
         {
             address = addressTemp;
-            
+
         }
-        System.out.println("Address: " + address +" Port: " + port);
+        System.out.println("Address: " + address + " Port: " + port);
     }
 
     /**
@@ -99,15 +117,20 @@ public class R12Operations
     public String read()
     {
         byte[] buffer = new byte[65536];
-        int offsetIterator = 0;
+        int offsetIterator = 0;//length of the buffer. Actual last pos is this - 1
         int response = 0;
         do
         {
             response = r12i.read(buffer, offsetIterator);
+            if (response < 0)
+            {
+                System.err.println("Error, response was " + response);
+            }
             offsetIterator += response;
         }
         while (buffer[offsetIterator - 1] != '>');
         String s = new String(buffer, 0, offsetIterator);
+//        System.out.println("Read Buffered: " + s);
         return s;
     }
 

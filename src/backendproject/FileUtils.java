@@ -125,7 +125,8 @@ public class FileUtils
     {
         ArrayList<String> arrayList = readFile(filePath);
 
-        //loop that removes all elements in the ArrayList that start with the CommandFileComment
+        //loop that removes all elements in the ArrayList 
+        //that start with the comment
         int i = 0;
         while (i < arrayList.size())
         {
@@ -165,8 +166,8 @@ public class FileUtils
             br = new BufferedReader(new FileReader(filePath));
             while ((sCurrentLine = br.readLine()) != null)
             {
-//                System.out.println(sCurrentLine);
-                fileLines.add(sCurrentLine);
+                //adds the line and trims it to remove excess whitespace
+                fileLines.add(sCurrentLine.trim());
             }
         }
         catch (FileNotFoundException ex)
@@ -272,9 +273,9 @@ public class FileUtils
         return new File(fileString).exists();
     }
 
-    public static String getWorkingDirectoryString()
+    public static String getFilesFolderString()
     {
-        return System.getProperty("user.dir") + File.separator;
+        return System.getProperty("user.dir") + File.separator + "robotFiles" + File.separator;
     }
 
 }

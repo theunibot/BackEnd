@@ -1,0 +1,12 @@
+//This is the R12 Robot Route Compiler file. This file is where commands are placed in the RoboForth
+//Language to generate sets of routes. 
+//Each command should be seperated by a carriage return.
+//All comments must be on their own line and start with "//"
+
+ROUTE TEST
+20 RESERVE
+LEARN
+DECIMAL 0 0 0 300.0 300.0 300.0 TEST 1 LINE DLD
+LEARN
+DECIMAL 0 0 0 300.0 300.0 100.0 TEST 2 LINE DLD
+
