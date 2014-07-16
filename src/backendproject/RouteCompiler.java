@@ -18,10 +18,13 @@ public class RouteCompiler
     private R12Operations r12o = R12Operations.getInstance();
 
     private final String ROUTE_COMPILER_FILE_CONTENTS = ""
-            + "//This is the R12 Robot Route Compiler file. This file is where commands are placed in the RoboForth"
-            + "\n//Language to generate sets of routes. "
-            + "\n//Each command should be seperated by a carriage return."
-            + "\n//All comments must be on their own line and start with \"//\""
+            + "////This is the R12 Robot Route Compiler file. This file is where commands are placed in the RoboForth\n"
+            + "//Language to generate sets of routes.\n"
+            + "//Each command should be on its own line.\n"
+            + "//All comments must be on their own line and start with \"//\"\n"
+            + "//\n"
+            + "//To Be Implemented: To declare a route to be avalible for use the syntax \"include: <name of route>\" to ensure\n"
+            + "//the route is added to a usable list for the program"
             + "\n"
             + "\nROUTE TEST";
     private final String PATH_TO_FILE = FileUtils.getFilesFolderString() + "routeCompiler.txt";
@@ -57,7 +60,7 @@ public class RouteCompiler
 
             if (!response.isSuccessful())
             {
-                System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());                
+                System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
             }
         }
 

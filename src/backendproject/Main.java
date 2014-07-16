@@ -37,30 +37,8 @@ public class Main
      * @param args the command line arguments
      */
     public static void main(String[] args)
-    {
-////        R12Interface i = new R12Interface();
-////        i.init();
-//        i.write("Hello World");
-//        System.out.println("Written");
-//        System.out.print(i.read());
-////        System.out.println("read 1");       
-//        System.out.print(i.read());
-////        System.out.println("read 3");
-//        System.out.print(i.read());
-//        System.out.println("done");
-//        i.quit();
-
-//        cmdQueue = Collections.synchronizedList(new ArrayList<ObjectCommand>());
-//        i1Queue = Collections.synchronizedList(new ArrayList<ObjectCommand>());
-//        i2Queue = Collections.synchronizedList(new ArrayList<ObjectCommand>());
-//        i3Queue = Collections.synchronizedList(new ArrayList<ObjectCommand>());
-//        ThreadServer threadServer = new ThreadServer();
-//        threadServer.start();        
+    {     
         ThreadCommand threadCommand = new ThreadCommand();
-        threadCommand.start();
-        
-        
-
-        
+        threadCommand.start();        
     }    
 }

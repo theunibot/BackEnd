@@ -1,12 +1,22 @@
 //This is the R12 Robot Route Compiler file. This file is where commands are placed in the RoboForth
 //Language to generate sets of routes. 
-//Each command should be seperated by a carriage return.
+//Each command should be on its own line.
 //All comments must be on their own line and start with "//"
+//
+//To Be Implemented: To declare a route to be avalible for use the syntax "include: <name of route>" to ensure
+//the route is added to a usable list for the program
 
+CARTESIAN
+15000 SPEED !
 ROUTE TEST
 20 RESERVE
 LEARN
 DECIMAL 0 0 0 300.0 300.0 300.0 TEST 1 LINE DLD
 LEARN
-DECIMAL 0 0 0 300.0 300.0 100.0 TEST 2 LINE DLD
-
+DECIMAL 0 0 0 300.0 100.0 300.0 TEST 2 LINE DLD
+LEARN
+DECIMAL 0 0 0 175.0 0.0 0.0 TEST 3 LINE DLD
+LEARN
+DECIMAL 0 0 0 300.0 100.0 -300.0 TEST 4 LINE DLD
+LEARN
+DECIMAL 0 0 0 300.0 300.0 -300.0 TEST 5 LINE DLD

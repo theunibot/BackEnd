@@ -29,7 +29,7 @@ public class ArmOperations
 
     private final String INIT_FILE_HEADER = ""
             + "//This is the R12 Robot Init File. This file is where commands are placed in the RoboForth"
-            + "\n//Language and are called upon startup by the R12Operations object. "
+            + "\n//Language and are called upon startup by the ThreadCommand thread. "
             + "\n//Each command should be seperated by a carriage return."
             + "\n//All comments must be on their own line and start with \"//\"";
 
@@ -47,7 +47,6 @@ public class ArmOperations
         {
             success = true;
         }
-        rc.init();
         return success;
     }
 
@@ -80,5 +79,30 @@ public class ArmOperations
             armOprations = new ArmOperations();
         }
         return armOprations;
+    }
+
+    public boolean runCommand()
+    {
+        String command = "CONTINUOUS ADJUST TEST RUN";
+        r12o.write(command);
+        ResponseObject response = r12o.getResponse(command);
+
+        if (!response.isSuccessful())
+        {
+            System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
+//                    return false;
+        }
+        
+        command = "HOME";
+        r12o.write(command);
+        response = r12o.getResponse(command);
+
+        if (!response.isSuccessful())
+        {
+            System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
+//                    return false;
+        }
+        
+        return true;
     }
 }
