@@ -43,10 +43,11 @@ public class ArmOperations
         r12o = R12Operations.getInstance();
         rc = RouteCompiler.getInstance();
         boolean success = false;
-        if (r12o.init() && runInitCommands() && rc.init())
-        {
-            success = true;
-        }
+        rc.init();
+//        if (r12o.init() && runInitCommands() && rc.init())
+//        {
+//            success = true;
+//        }
         return success;
     }
 
@@ -63,6 +64,7 @@ public class ArmOperations
             r12o.write(command);
             ResponseObject response = r12o.getResponse(command);
 
+            System.out.println(response.getMsg());
             if (!response.isSuccessful())
             {
                 System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
@@ -83,16 +85,15 @@ public class ArmOperations
 
     public boolean runCommand()
     {
-        String command = "CONTINUOUS ADJUST TEST RUN";
-        r12o.write(command);
-        ResponseObject response = r12o.getResponse(command);
 
-        if (!response.isSuccessful())
-        {
-            System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
-//                    return false;
-        }
-        
+        return true;
+    }
+}
+/*
+System.out.println("running");
+        String command;
+        ResponseObject response;
+
         command = "HOME";
         r12o.write(command);
         response = r12o.getResponse(command);
@@ -102,7 +103,58 @@ public class ArmOperations
             System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
 //                    return false;
         }
-        
-        return true;
-    }
-}
+
+        for (int i = 0; i < 1000; i++)
+        {
+            System.out.println("looped");
+
+            command = "3000 3000 3000 MOVETO";
+            r12o.write(command);
+            response = r12o.getResponse(command);
+
+            System.out.println(response.getMsg());
+            if (!response.isSuccessful())
+            {
+                System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
+//                    return false;
+            }
+
+            command = "HOME";
+            r12o.write(command);
+            response = r12o.getResponse(command);
+
+            if (!response.isSuccessful())
+            {
+                System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
+//                    return false;
+            }
+
+//            command = "HOME";
+//            r12o.write(command);
+//            response = r12o.getResponse(command);
+//
+//            if (!response.isSuccessful())
+//            {
+//                System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
+////                    return false;
+//            }
+//
+//            command = "TEST RUN";
+//            r12o.write(command);
+//            response = r12o.getResponse(command);
+//
+//            if (!response.isSuccessful())
+//            {
+//                System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
+////                    return false;
+//            }
+//            command = "GRIP";
+//            r12o.write(command);
+//            response = r12o.getResponse(command);
+//
+//            if (!response.isSuccessful())
+//            {
+//                System.err.println("Command Failed! Cmd: " + command + " Response Msg: " + response.getMsg());
+////                    return false;
+//            }
+*/

@@ -23,11 +23,9 @@ public class ThreadCommand extends Thread
     public void run()
     {
         init();
-        
-        for (int i = 0; i < 3; i++)
-        {
-            ao.runCommand();
-        }
+
+        ao.runCommand();
+
     }
 
     private void init()
