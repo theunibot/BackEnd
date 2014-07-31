@@ -41,20 +41,20 @@ public class ObjectRouteCartesianCommand implements ObjectRouteInterface
 //        this.yaw = Integer.parseInt(yaw);
 //        this.roll = Integer.parseInt(roll);
         this.routeName = routeName;
-        this.line = line;
-        parsePYR();
+        this.line = line;     
     }
-
-    private void parsePYR()
+    
+    @Override
+    public boolean isRouteDefine()
     {
-        
+        return false;
     }
     
     @Override
     public String toString()
-    {
+    {        
         return "LEARN\n"
-                + "DECIMAL " + roll + " " + yaw + " " + pitch + " " + z + " " + y + " " + x + " " + routeName + " " + line + " DLD";
+                + "DECIMAL " + rollStr + " " + yawStr + " " + pitchStr + " " + z + " " + y + " " + x + " " + routeName + " " + line + " DLD";
     }
 
     public int getX()

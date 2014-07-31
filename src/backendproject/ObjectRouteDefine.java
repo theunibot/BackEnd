@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package backendproject;
 
 /**
@@ -12,11 +11,13 @@ package backendproject;
  */
 public class ObjectRouteDefine implements ObjectRouteInterface
 {
+
     private String routeName;
+    
 
     public ObjectRouteDefine(String routeName)
     {
-        this.routeName = routeName.trim();
+        this.routeName = routeName.trim();    
     }
 
     @Override
@@ -24,7 +25,11 @@ public class ObjectRouteDefine implements ObjectRouteInterface
     {
         return "ROUTE " + this.routeName;
     }
-    
-    
-    
+
+    @Override
+    public boolean isRouteDefine()
+    {
+        return true;
+    }
+
 }

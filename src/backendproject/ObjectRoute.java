@@ -3,18 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package backendproject;
 
 /**
  *
  * @author kyle
  */
-public interface ObjectRouteInterface
+public class ObjectRoute
 {
+    String name;
+    RouteInfo routeInfo;
 
-    
-    public String toString();
-    
-    public boolean isRouteDefine();
-    
+    public ObjectRoute(String name, RouteInfo routeInfo)
+    {
+        this.name = name;
+        this.routeInfo = routeInfo;
+    }      
 }
