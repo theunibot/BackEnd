@@ -35,21 +35,21 @@ public class ObjectRouteContainer
      * @param r route to select
      * @param o RouteObject to add 
      */
-    public void add(RouteInfo r, ObjectRoute o)
+    public void add(EnumRouteInfo r, ObjectRoute o)
     {
-        if (r == RouteInfo.D1L)
+        if (r == EnumRouteInfo.D1L)
         {
             d1l.add(o);
         }
-        else if(r==RouteInfo.D1R)
+        else if(r==EnumRouteInfo.D1R)
         {
             d1r.add(o);
         }
-        else if (r == RouteInfo.D2L)
+        else if (r == EnumRouteInfo.D2L)
         {
             d2l.add(o);
         }
-        else if (r == RouteInfo.D2R)
+        else if (r == EnumRouteInfo.D2R)
         {
             d2r.add(o);
         }
@@ -60,21 +60,21 @@ public class ObjectRouteContainer
      * @param r which route section to return
      * @return ArrayList of ObjectRoute
      */
-    public ArrayList<ObjectRoute> get(RouteInfo r)
+    public ArrayList<ObjectRoute> get(EnumRouteInfo r)
     {
-        if (r == RouteInfo.D1L)
+        if (r == EnumRouteInfo.D1L)
         {
             return d1l;
         }
-        else if(r==RouteInfo.D1R)
+        else if(r==EnumRouteInfo.D1R)
         {
             return d1r;
         }
-        else if (r == RouteInfo.D2L)
+        else if (r == EnumRouteInfo.D2L)
         {
             return d2l;
         }
-        else if (r == RouteInfo.D2R)
+        else if (r == EnumRouteInfo.D2R)
         {
             return d2r;
         }
@@ -83,10 +83,4 @@ public class ObjectRouteContainer
             return null;
         }
     }
-}
-
-enum RouteInfo
-{
-
-    D1L, D1R, D2L, D2R, S
 }

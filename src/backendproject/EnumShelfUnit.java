@@ -10,14 +10,8 @@ package backendproject;
  *
  * @author kyle
  */
-public class ObjectRoute
+public enum EnumShelfUnit
 {
-    String name;
-    EnumRouteInfo routeInfo;
 
-    public ObjectRoute(String name, EnumRouteInfo routeInfo)
-    {
-        this.name = name;
-        this.routeInfo = routeInfo;
-    }      
+    D1, D2, CP, S
 }

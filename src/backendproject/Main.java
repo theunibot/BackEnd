@@ -5,33 +5,14 @@
  */
 package backendproject;
 
-import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Robotics1
  */
 public class Main
-{
-
-    static List<ObjectCommand> cmdQueue;
-    static List<ObjectCommand> i1Queue;
-    static List<ObjectCommand> i2Queue;
-    static List<ObjectCommand> i3Queue;
-        
+{        
 
     /**
      * @param args the command line arguments

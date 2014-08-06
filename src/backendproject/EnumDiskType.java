@@ -10,14 +10,7 @@ package backendproject;
  *
  * @author kyle
  */
-public class ObjectRoute
+public enum EnumDiskType
 {
-    String name;
-    EnumRouteInfo routeInfo;
-
-    public ObjectRoute(String name, EnumRouteInfo routeInfo)
-    {
-        this.name = name;
-        this.routeInfo = routeInfo;
-    }      
+    EMPTY, ADOBE
 }
